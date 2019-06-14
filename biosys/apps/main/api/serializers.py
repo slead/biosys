@@ -16,7 +16,7 @@ from drf_extra_fields.fields import Base64ImageField
 
 from main.api.validators import get_record_validator_for_dataset
 from main.constants import MODEL_SRID
-from main.models import Program, Project, Site, Dataset, Record, Media, DatasetMedia, ProjectMedia
+from main.models import Program, Project, Site, Dataset, Record, Media, DatasetMedia, ProjectMedia, Form
 from main.utils_auth import is_admin
 from main.utils_species import get_key_for_value
 
@@ -168,6 +168,12 @@ class SiteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Form
+        fields = '__all__'
+
+
 class DatasetSerializer(serializers.ModelSerializer):
     record_count = serializers.IntegerField(required=False, read_only=True)
     extent = serializers.ListField(required=False, read_only=True)
@@ -315,10 +321,11 @@ class RecordSerializer(serializers.ModelSerializer):
         observation_date = RecordSerializer.get_datetime(dataset, validated_data['data'])
         if observation_date:
             # convert to datetime with timezone awareness
-            if isinstance(observation_date, datetime.date):
+            if isinstance(observation_date, datetime.date) and not isinstance(observation_date, datetime.datetime):
                 observation_date = datetime.datetime.combine(observation_date, datetime.time.min)
-            tz = dataset.project.timezone or timezone.get_current_timezone()
-            observation_date = timezone.make_aware(observation_date, tz)
+            if timezone.is_naive(observation_date):
+                tz = dataset.project.timezone or timezone.get_current_timezone()
+                observation_date = timezone.make_aware(observation_date, tz)
             instance.datetime = observation_date
             if commit:
                 instance.save()
