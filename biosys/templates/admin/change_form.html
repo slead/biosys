@@ -12,8 +12,8 @@
 {% block javascripts %}
     {{ block.super }}
     {% url 'admin:jsi18n' as jsi18nurl %}
-    <script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/' }}"></script>
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" src="{{ jsi18nurl|default:'../../../jsi18n/' }}" {{ script_nonce }}></script>
+    <script type="text/javascript" charset="utf-8" {{ script_nonce }}>
         (function($) {
             $(document).ready(function() {
                 grappelli.initDateAndTimePicker();
@@ -108,7 +108,7 @@
 {% block extrahead %}
     {{ block.super }}
     {% if adminform and add %}
-    <script type="text/javascript">
+    <script type="text/javascript" {{ script_nonce }}>
         (function($){
             $(document).ready(function() {
                 $('form#{{ opts.model_name }}_form :input:visible:enabled:first').focus()

@@ -81,6 +81,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'csp_nonce.middleware.CSPNonceMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 EXTRA_MIDDLEWARE = env('EXTRA_MIDDLEWARE', [
@@ -109,6 +111,7 @@ TEMPLATES = [
                 "django.template.context_processors.tz",
                 "django.template.context_processors.csrf",
                 "django.contrib.messages.context_processors.messages",
+                "csp_nonce.context_processors.nonce",
                 "biosys.context_processors.standard",
             ],
         },

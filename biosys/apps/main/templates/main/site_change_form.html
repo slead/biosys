@@ -2,7 +2,7 @@
 
 {% block javascripts %}
 	{{ block.super }}
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" charset="utf-8" {{ script_nonce }}>
 	    (function($) {
 	        $(document).ready(function() {
 	        	API_PROJECT_URL = '/api/project/';
