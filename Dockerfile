@@ -3,6 +3,8 @@ ADD . /app/
 WORKDIR /app/
 RUN apt-get update && \
     apt-get install --assume-yes \
+      git \
+      libpq-dev \
       libsasl2-dev \
       libldap2-dev \
       gdal-bin \
@@ -17,6 +19,7 @@ RUN apt-get update && \
     bash -c 'echo SECRET_KEY="ThisIsASecretKey"                           >> /app/.env' && \
     bash -c 'echo CSRF_COOKIE_SECURE=False                                >> /app/.env' && \
     bash -c 'echo SESSION_COOKIE_SECURE=False                             >> /app/.env' && \
+    bash -c 'echo EXTRA_MIDDLEWARE=[]                            >> /app/.env' && \
     bash -c 'echo "from django.contrib.auth.models import User"                 >> create-user.py' && \
     bash -c "echo \"User.objects.create_superuser('admin', 'a@b.c', 'admin')\"  >> create-user.py" && \
     bash -c 'echo "#!/bin/bash"                                        >> /app/entrypoint.sh' && \
