@@ -19,7 +19,7 @@ libraries to be installed without possible collisions with other versions of the
 - create a `biosys` virtual enviroment
 - create a `biosys` postgres db
 - run: `pip install -r requirements_DBCA.txt` within the `biosys` venv
-- copy `.env.exmaple`
+- copy `.env.exmaple` to `.env`
 - run: `./manage.py migrate`
 - run: `./manage.py runserver`
 

@@ -392,3 +392,6 @@ ALLOW_PUBLIC_REGISTRATION = env('ALLOW_PUBLIC_REGISTRATION', False)
 # List of projects that a new user can be assign to as a custodian.
 # If empty a new user won't be assigned to any project.
 ALLOWED_PUBLIC_REGISTRATION_PROJECTS = env('ALLOWED_PUBLIC_REGISTRATION_PROJECTS', [])
+
+# case insensitive user
+AUTH_USER_MODEL = 'main.CustomUser'
