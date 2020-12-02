@@ -15,7 +15,6 @@ from django.core.exceptions import ValidationError
 from django.utils.text import Truncator
 from django.db.models.query_utils import Q
 from timezone_field import TimeZoneField
-from django.contrib.auth.models import AbstractUser, UserManager
 
 from main.constants import DATUM_CHOICES, MODEL_SRID
 from main.utils_auth import is_admin
@@ -1028,12 +1027,3 @@ class DatasetMedia(models.Model):
 
     def has_object_destroy_permission(self, request):
         return is_admin(request.user) or self.is_data_engineer(request.user)
-
-
-class CustomUserManager(UserManager):
-    def get_by_natural_key(self, username):
-        case_insensitive_username_field = '{}__iexact'.format(self.model.USERNAME_FIELD)
-        return self.get(**{case_insensitive_username_field: username})
-
-class CustomUser(AbstractUser):
-    objects = CustomUserManager()
