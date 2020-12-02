@@ -32,8 +32,8 @@ class UsernameValidator(RegexValidator):
     A username validator that allows `\` (backslash). This is a requirement imposed by NSW OEH.
     By default Django and DRF doesn't allow it.
     """
-    regex = r'^[\w.@+-\\]+$'
-    message = 'Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_/\ characters.'
+    regex = r'^[a-z0-9@+\\.-]+$'
+    message = 'Enter a valid username. This value may contain only lowercase letters, numbers, and @/./+/-/_/\ characters.'
 
 
 class WhoAmISerializer(serializers.ModelSerializer):
