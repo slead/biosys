@@ -30,6 +30,7 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS', [
     'biosys.dbca.wa.gov.au.',
     'biosys-uat.dbca.wa.gov.au',
     'biosys-uat.dbca.wa.gov.au.',
+    '52.64.97.140'
 ])
 
 if system() == 'Windows':
