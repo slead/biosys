@@ -1,31 +1,32 @@
 branch-defaults:
   master:
-    environment: biosys-staging
-  staging:
-    environment: biosys-staging
-  uat:
-    environment: biosys-uat
+    environment: Biosysdevdjango-env
+    group_suffix: null
+  oeh_production:
+    environment: biosys-production
   oeh_uat:
     environment: biosys-uat
   production:
     environment: biosys-production
-  oeh_production:
+  slug_production:
     environment: biosys-production
   slug_uat:
     environment: biosys-uat
-  slug_production:
-    environment: biosys-production
+  staging:
+    environment: biosys-staging
+  uat:
+    environment: biosys-uat
 global:
   application_name: biosys
-  branch: master
+  branch: null
   default_ec2_keyname: aws-eb
-  default_platform: Python 3.6
+  default_platform: Python 3.8 running on 64bit Amazon Linux 2
   default_region: ap-southeast-2
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
-  profile: null
+  profile: eb-cli
   repository: null
   sc: git
   workspace_type: Application
