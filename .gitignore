@@ -57,6 +57,7 @@ biosys.conf
 **/.DS_Store
 
 # Elastic Beanstalk Files
+.aws/*
 .elasticbeanstalk/*
 !.elasticbeanstalk/*config.yml
 !.elasticbeanstalk/*.cfg.yml
