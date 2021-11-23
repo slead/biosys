@@ -191,23 +191,26 @@ CORS_ORIGIN_REGEX_WHITELIST = env('CORS_ORIGIN_WHITELIST', [
 WSGI_APPLICATION = 'biosys.wsgi.application'
 
 # Database
-if env('RDS_DB_NAME'):
-    # AWS settings found
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': env('RDS_DB_NAME'),
-            'USER': env('RDS_USERNAME'),
-            'PASSWORD': env('RDS_PASSWORD'),
-            'HOST': env('RDS_HOSTNAME'),
-            'PORT': env('RDS_PORT'),
-        }
-    }
-else:
-    # look for a DATABASE_URL
-    DATABASES = {
-        'default': database.config(name='DATABASE_URL', default='postgis://postgres:postgres@localhost/biosys')
-    }
+# if env('RDS_DB_NAME'):
+#     # AWS settings found
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#             'NAME': env('RDS_DB_NAME'),
+#             'USER': env('RDS_USERNAME'),
+#             'PASSWORD': env('RDS_PASSWORD'),
+#             'HOST': env('RDS_HOSTNAME'),
+#             'PORT': env('RDS_PORT'),
+#         }
+#     }
+# else:
+#     # look for a DATABASE_URL
+#     DATABASES = {
+#         'default': database.config(name='DATABASE_URL', default='postgis://postgres:postgres@localhost/biosys')
+#     }
+DATABASES = {
+    'default': database.config(name='DATABASE_URL', default='postgis://postgres:postgres@localhost/biosys')
+}
 
 # Internationalization
 LANGUAGE_CODE = 'en-au'

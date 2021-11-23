@@ -10,6 +10,7 @@ from tableschema import exceptions as tableschema_exceptions
 from django.conf import settings
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models import Extent
+from django.contrib.auth.models import User
 from django.db.models import JSONField
 from django.core.exceptions import ValidationError
 from django.utils.text import Truncator
@@ -36,7 +37,16 @@ class Program(models.Model):
     data_engineers = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         blank=True,
-        help_text="Users that can create/update projects and dataset schema within this program."
+        help_text="Users that can create/update projects and dataset schema within this program.",
+        related_name='data_engineer_user'
+    )
+
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Owner',
+        on_delete=models.CASCADE,
+        related_name='program_user',
+        default=1
     )
 
     def is_data_engineer(self, user):
@@ -119,6 +129,13 @@ class Project(models.Model):
     custodians = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=False,
                                         help_text="Users that have write/upload access to the data of this project.")
 
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Owner',
+        on_delete=models.CASCADE,
+        related_name='project_user',
+        default=1
+    )
     def is_custodian(self, user):
         return user in self.custodians.all()
 
@@ -230,6 +247,14 @@ class Site(models.Model):
                                    verbose_name="Description", help_text="")
     attributes = JSONField(null=True, blank=True)
 
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Owner',
+        on_delete=models.CASCADE,
+        related_name='site_user',
+        default=1
+    )
+    
     def is_custodian(self, user):
         return self.project.is_custodian(user)
 
@@ -332,6 +357,14 @@ class Dataset(models.Model):
     data_package = JSONField()
     description = models.TextField(null=True, blank=True,
                                    verbose_name="Description", help_text="")
+
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Owner',
+        on_delete=models.CASCADE,
+        related_name='_user',
+        default=1
+    )
 
     def __str__(self):
         return '{}'.format(self.name)
@@ -617,6 +650,14 @@ class Record(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Owner',
+        on_delete=models.CASCADE,
+        related_name='record_user',
+        default=1
+    )
 
     def __str__(self):
         return "{0}: {1}".format(self.dataset.name, Truncator(self.data).chars(100))
