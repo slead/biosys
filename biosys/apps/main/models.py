@@ -20,6 +20,7 @@ from timezone_field import TimeZoneField
 from main.constants import DATUM_CHOICES, MODEL_SRID
 from main.utils_auth import is_admin
 from main.utils_data_package import GenericSchema, ObservationSchema, SpeciesObservationSchema
+import pdb
 
 logger = logging.getLogger(__name__)
 
@@ -136,6 +137,7 @@ class Project(models.Model):
         related_name='project_user',
         default=1
     )
+
     def is_custodian(self, user):
         return user in self.custodians.all()
 
@@ -256,6 +258,7 @@ class Site(models.Model):
     )
     
     def is_custodian(self, user):
+        # pdb.set_trace()
         return self.project.is_custodian(user)
 
     def is_data_engineer(self, user):
@@ -264,6 +267,7 @@ class Site(models.Model):
     # API permissions
     @staticmethod
     def has_read_permission(request):
+        # pdb.set_trace()
         return True
 
     def has_object_read_permission(self, request):

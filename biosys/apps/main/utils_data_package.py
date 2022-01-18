@@ -478,8 +478,7 @@ class GenericSchema(object):
         if field is not None:
             return field.validation_error(value)
         else:
-            raise Exception("The field '{}' doesn't exists in the schema. Should be one of {}"
-                            .format(field_name, self.field_names))
+            raise Exception("Exception: The field '{}' doesn't exist in the schema.".format(field_name))
 
     def is_field_valid(self, field_name, value):
         return self.field_validation_error(field_name, value) is None
